@@ -48,6 +48,7 @@ public enum Permission
 	UNCLAIM("unclaim"),
 	UNCLAIM_ALL("unclaimall"),
 	VERSION("version"),
+	FASTHOME("fasthome")
 	;
 	
 	public final String node;

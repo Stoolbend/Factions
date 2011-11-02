@@ -201,6 +201,9 @@ public class Conf
 	public static transient int mapWidth = 39;
 	public static transient char[] mapKeyChrs = "\\/#?$%=&^ABCDEFGHJKLMNOPQRSTUVWXYZ1234567890abcdeghjmnopqrsuvwxyz".toCharArray();
 	
+	// /f home Timer value
+	public static int homeCountdown = 10;
+	
 	static
 	{
 		baseCommandAliases.add("f");

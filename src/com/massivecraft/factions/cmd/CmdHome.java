@@ -1,6 +1,8 @@
 package com.massivecraft.factions.cmd;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -41,6 +43,8 @@ public class CmdHome extends FCommand
 	@Override
 	public void perform()
 	{
+		double delay = Conf.homeCountdown;
+		
 		// TODO: Hide this command on help also.
 		if ( ! Conf.homesEnabled)
 		{
@@ -137,7 +141,28 @@ public class CmdHome extends FCommand
 			SmokeUtil.spawnCloudRandom(smokeLocations, Conf.homesTeleportCommandSmokeEffectThickness);
 		}
 		
+		cooldown(true);
+		if (delay <= 0 || Permission.FASTHOME.has(me))
+		{
+		cooldown(false);
+		return;
+		}
+		
 		me.teleport(myFaction.getHome());
+	}
+	
+	public void cooldown(boolean check)
+	{
+	Calendar now = new GregorianCalendar();
+	double cooldown = Conf.homeCountdown;
+	Calendar cooldownTime = new GregorianCalendar();
+	cooldownTime.setTimeInMillis(0);
+	cooldownTime.add(Calendar.SECOND, (int)cooldown);
+	cooldownTime.add(Calendar.MILLISECOND, (int)((cooldown * 1000.0) % 1000.0));
+	if (cooldownTime.after(now) && !Permission.FASTHOME.has(me))
+	{
+		fme.msg("Time untill you go home: "+cooldownTime.getTimeInMillis()+"");
+	}
 	}
 	
 }
